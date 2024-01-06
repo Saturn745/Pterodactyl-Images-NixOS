@@ -1,0 +1,60 @@
+name: Nix
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        channel:
+          - nixos-unstable
+        tag:
+          - 17
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fuckin Ubuntu
+        run: |
+          apt-get update
+          apt-get install sudo -y
+      - name: Install Docker Shiz
+        run: |
+          curl -sSL https://get.docker.com/ | CHANNEL=stable bash
+
+      - name: Install Nix
+        uses: https://github.com/cachix/install-nix-action@v24
+        with:
+          enable_kvm: false
+          nix_path: nixpkgs=channel:${{ matrix.channel }}
+
+      - name: Print nixpkgs version
+        run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
+        
+      - name: Build image
+        run: |
+          nix-build java/${{ matrix.tag }}/image.nix \
+            --no-out-link \
+            --option sandbox true \
+            -o java-${{ matrix.tag }}.output
+
+      - name: Login to container registry
+        uses: https://github.com/docker/login-action@v3
+        with:
+          registry: "https://codeberg.org"
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to container registry
+        run: |
+          docker load -i java-${{ matrix.tag }}.output
+          docker image ls -a
+          docker push codeberg.org/saturn745/pterodactyl-java-${{ matrix.tag }}-nix:latest
