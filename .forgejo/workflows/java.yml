@@ -50,8 +50,8 @@ jobs:
         uses: https://github.com/docker/login-action@v3
         with:
           registry: "https://codeberg.org"
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: Saturn745
+          password: ${{ secrets.CODEBERG_PKG_TOKEN }}
 
       - name: Push to container registry
         run: |
