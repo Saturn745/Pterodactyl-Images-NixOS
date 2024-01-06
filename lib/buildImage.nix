@@ -15,7 +15,7 @@ pkgs.dockerTools.buildLayeredImage {
   tag = "latest";
   created = "now";
   contents = contents;
-  maxLayers = 125;
+  maxLayers = 95;
   fakeRootCommands = ''
     mkdir -p \
       /etc \
