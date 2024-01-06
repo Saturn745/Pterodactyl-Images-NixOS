@@ -60,3 +60,4 @@ jobs:
           docker load -i java-${{ matrix.tag }}.output
           docker image ls -a
           docker push codeberg.org/saturn745/pterodactyl-java-${{ matrix.tag }}-nix:latest
+          docker image rm codeberg.org/saturn745/pterodactyl-java-${{ matrix.tag }}-nix

@@ -12,5 +12,5 @@ buildImage {
     echo ":/home/container$ $MODIFIED_STARTUP"
     $MODIFIED_STARTUP
   '';
-  contents = [ pkgs.jre17_minimal ];
+  contents = [ pkgs.openjdk17-bootstrap ];
 }
