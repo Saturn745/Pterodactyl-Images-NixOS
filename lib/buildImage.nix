@@ -28,7 +28,7 @@ pkgs.dockerTools.buildLayeredImage {
     echo "Container User: $(id -u container)"
   '';
   config = {
-    Cmd = [ "/bin/bash" dockerEntrypoint ];
+    Cmd = [ "${pkgs.bash}/bin/bash" dockerEntrypoint ];
     WorkingDir = "/home/container";
   };
 }
