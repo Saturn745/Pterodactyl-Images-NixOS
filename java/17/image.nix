@@ -12,5 +12,5 @@ buildImage {
     echo ":/home/container$ $MODIFIED_STARTUP"
     $MODIFIED_STARTUP
   '';
-  contents = [ pkgs.openjdk17-bootstrap pkgs.stdenv.cc.cc.lib ];
+  contents = [ pkgs.openjdk17-bootstrap pkgs.libstdcxx5 ];
 }
