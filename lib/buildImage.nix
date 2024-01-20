@@ -1,7 +1,8 @@
 { pkgs ? import <nixpkgs> { system = "x86_64-linux"; }
-, name
+, name ? "codeberg.org/saturn745/pterodactyl-nixos"
 , entryPoint
 , contents
+, tag
 }:
 
 let
@@ -12,7 +13,7 @@ let
 in
 pkgs.dockerTools.buildLayeredImage {
   name = name;
-  tag = "latest";
+  tag = tag;
   created = "now";
   contents = contents;
   maxLayers = 125;
@@ -30,6 +31,10 @@ pkgs.dockerTools.buildLayeredImage {
   config = {
     Cmd = [ "${pkgs.bash}/bin/bash" "${dockerEntrypoint}/bin/entrypoint.sh" ];
     WorkingDir = "/home/container";
+    Env = [
+      "USER=container"
+      "HOME=/home/container"
+    ];
   };
 }
 

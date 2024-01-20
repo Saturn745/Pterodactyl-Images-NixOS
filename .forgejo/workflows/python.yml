@@ -1,15 +1,15 @@
-name: Build Java Images
+name: Build Python Images
 
 on:
   push:
     branches:
       - main
     paths:
-      - java/**
+      - python/**
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * 1'  # This schedule runs every Monday at 6 AM UTC
+    - cron: '0 7 * * 1'  # This schedule runs every Monday at 7 AM UTC
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
         channel:
           - nixos-unstable
         tag:
-          - 17
+          - 3-poetry
 
     steps:
       - name: Checkout repository
@@ -45,10 +45,10 @@ jobs:
         
       - name: Build image
         run: |
-          nix-build java/${{ matrix.tag }}/image.nix \
+          nix-build python/${{ matrix.tag }}/image.nix \
             --no-out-link \
             --option sandbox true \
-            -o java-${{ matrix.tag }}.output
+            -o python-${{ matrix.tag }}.output
 
       - name: Login to container registry
         uses: https://github.com/docker/login-action@v3
@@ -59,7 +59,7 @@ jobs:
 
       - name: Push to container registry
         run: |
-          docker load -i java-${{ matrix.tag }}.output
+          docker load -i python-${{ matrix.tag }}.output
           docker image ls -a
-          docker push codeberg.org/saturn745/pterodactyl-nixos:java${{ matrix.tag }}
-          docker image rm codeberg.org/saturn745/pterodactyl-nixos:java${{ matrix.tag }}
+          docker push codeberg.org/saturn745/pterodactyl-nixos:python${{ matrix.tag }}
+          docker image rm codeberg.org/saturn745/pterodactyl-nixos:python${{ matrix.tag }}
