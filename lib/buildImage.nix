@@ -34,6 +34,7 @@ pkgs.dockerTools.buildLayeredImage {
     Env = [
       "USER=container"
       "HOME=/home/container"
+      "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
     ];
   };
 }
