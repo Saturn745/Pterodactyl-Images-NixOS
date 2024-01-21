@@ -12,6 +12,6 @@ buildImage {
     echo ":/home/container$ $MODIFIED_STARTUP"
     $MODIFIED_STARTUP
   '';
-  contents = [ pkgs.python3 pkgs.poetry ];
+  contents = [ pkgs.python3 pkgs.poetry pkgs.git ];
 }
 
