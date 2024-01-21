@@ -1,5 +1,6 @@
 { pkgs ? import <nixpkgs> { system = "x86_64-linux"; }
 }:
+
 let buildImage = import ../../lib/buildImage.nix;
 in
 buildImage {
