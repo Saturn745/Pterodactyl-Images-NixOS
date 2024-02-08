@@ -19,4 +19,4 @@ All images use [NixOS](https://nixos.org) as the base OS and provide only what i
 
 # Image Updates
 
-All images get automatically rebuilt based off of the offical [Nix OCI Image](https://hub.docker.com/r/nixos/nix) at 2:00 PM (UTC) and on every change to the images with the [CI](https://ci.kernel.templeos.win/repos/1)
+All images get automatically rebuilt based off of the offical [Nix OCI Image](https://hub.docker.com/r/nixos/nix) at 07:00 UTC and on every change to the images with the [CI](https://ci.kernel.templeos.win/repos/1)
