@@ -1,0 +1,18 @@
+matrix:
+  PYTHON_IMAGE:
+    - 3-poetry
+when:
+  path:
+    include: ["python/**", ".woodpecker/python.yml"]
+  event: [push, cron]
+  cron: python
+
+steps:
+  build:
+    image: nixos/nix
+    commands:
+      - mkdir build/
+      - nix-build python/${PYTHON_IMAGE}/image.nix --no-out-link --option sandbox true -o build/python-${PYTHON_IMAGE}.output 
+      - ls -l -h -a build/
+      - nix-shell -p skopeo --command "echo $CODEBERG_PKG_TOKEN | skopeo login -u Saturn745 --password-stdin codeberg.org && skopeo --insecure-policy copy docker-archive:./build/python-${PYTHON_IMAGE}.output docker://codeberg.org/saturn745/pterodactyl-nixos:python${PYTHON_IMAGE}"
+    secrets: [ codeberg_pkg_token ]
