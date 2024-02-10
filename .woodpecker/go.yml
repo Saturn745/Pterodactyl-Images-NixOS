@@ -1,6 +1,6 @@
 matrix:
   GO_IMAGE:
-    - 3-poetry
+    - 1.22
 when:
   path:
     include: ["go/**", ".woodpecker/go.yml"]
