@@ -11,6 +11,7 @@ steps:
   build:
     image: nixos/nix
     commands:
+      - nix-channel --add https://nixos.org/channels/nixos-unstable
       - mkdir build/
       - nix-build python/${PYTHON_IMAGE}/image.nix --no-out-link --option sandbox true -o build/python-${PYTHON_IMAGE}.output 
       - ls -l -h -a build/
