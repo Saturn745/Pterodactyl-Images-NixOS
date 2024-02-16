@@ -11,6 +11,8 @@ steps:
   build:
     image: nixos/nix
     commands:
+      - nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+      - nix-channel --update
       - mkdir build/
       - nix-build go/${GO_IMAGE}/image.nix --no-out-link --option sandbox true -o build/go-${GO_IMAGE}.output 
       - ls -l -h -a build/
