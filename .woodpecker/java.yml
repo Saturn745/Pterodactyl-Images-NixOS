@@ -11,6 +11,9 @@ steps:
   build:
     image: nixos/nix
     commands:
+      - nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+      - nix-channel --update
+      - nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
       - mkdir build/
       - nix-build java/${JAVA_IMAGE}/image.nix --no-out-link --option sandbox true -o build/java-${JAVA_IMAGE}.output 
       - ls -l -h -a build/
